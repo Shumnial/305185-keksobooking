@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Nikita Shumakov](https://up.htmlacademy.ru/javascript/12/user/305185).
-* Наставник: `Неизвестно`.
+* Наставник: [Alexander Bolshov](https://up.htmlacademy.ru/javascript/12/user/179111).
 
 ---
 
