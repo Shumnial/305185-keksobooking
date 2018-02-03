@@ -66,8 +66,9 @@ var fillPinsTemplate = function (arr) {
   var mapPins = document.querySelector('.map__pins');
   for (var i = 0; i < arr.length; i++) {
     var element = button.cloneNode(true);
-    button.style.left = arr[i].location.x - 20 + 'px';
-    button.style.top = arr[i].location.y + 40 + 'px';
+    button.style.left = arr[i].location.x - 25 + 'px';
+    button.style.top = arr[i].location.y + 70 + 'px';
+
     img.setAttribute('src', arr[i].author.avatar);
     fragment.appendChild(element);
   }
