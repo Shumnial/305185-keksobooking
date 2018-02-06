@@ -22,8 +22,8 @@ var shuffleArray = function (arr) {
   }
   return arr;
 };
-var generatedAds = [];
 // Генерирует рандомные объявления
+var generatedAds = [];
 var generateRandomAds = function () {
   var titles = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
   var types = ['flat', 'house', 'bungalo'];
@@ -58,19 +58,48 @@ var generateRandomAds = function () {
 };
 generateRandomAds();
 
-var fillPinsTemplate = function (arr) {
+var fillPinsTemplate = function () {
   var template = document.querySelector('#map-template');
   var button = template.content.querySelector('.map__pin');
   var img = button.querySelector('img');
   var fragment = document.createDocumentFragment();
   var mapPins = document.querySelector('.map__pins');
-  for (var i = 0; i < arr.length; i++) {
-    var element = button.cloneNode(true);
+  generatedAds.forEach(function (element, i, arr) {
     button.style.left = arr[i].location.x - 25 + 'px';
     button.style.top = arr[i].location.y + 70 + 'px';
     img.setAttribute('src', arr[i].author.avatar);
-    fragment.appendChild(element);
-  }
+    fragment.appendChild(button.cloneNode(true));
+  });
   mapPins.appendChild(fragment);
 };
 fillPinsTemplate(generatedAds);
+var fillFeatureField = function (arr) {
+  var template = document.querySelector('#map-template');
+  var popupFeatures = template.content.querySelector('.popup__features');
+  for (var i = 0; i < arr[0].offer.features.length; i++) {
+    var newElement = document.createElement('li');
+    newElement.classList.add('feature');
+    newElement.classList.add('feature--' + arr[0].offer.features[i]);
+    popupFeatures.appendChild(newElement.cloneNode(true));
+  }
+};
+var fillAdsTemplate = function () {
+  var template = document.querySelector('#map-template');
+  var mapCard = template.content.querySelector('.map__card');
+  var map = document.querySelector('.map');
+  var title = template.content.querySelector('h3');
+  var address = template.content.querySelector('p > small');
+  var price = template.content.querySelector('.popup__price');
+  var type = template.content.querySelector('h4');
+  var roomsAndGuests = template.content.querySelectorAll('p')[2];
+  var checkinAndCheckout = template.content.querySelectorAll('p')[3];
+  title.textContent = generatedAds[0].offer.title;
+  address.textContent = generatedAds[0].offer.address;
+  price.textContent = generatedAds[0].offer.price + ' \u20bd' + '/ночь';
+  type.content = generatedAds[0].offer.type;
+  roomsAndGuests.textContent = generatedAds[0].offer.rooms + ' комнаты для ' + generatedAds[0].offer.guests + ' гостей';
+  checkinAndCheckout.textContent = 'Заезд после ' + generatedAds[0].offer.checkin + ' выезд до ' + generatedAds[0].offer.checkout;
+  fillFeatureField(generatedAds);
+  map.appendChild(mapCard);
+};
+fillAdsTemplate();
