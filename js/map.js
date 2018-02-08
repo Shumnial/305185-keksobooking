@@ -85,6 +85,17 @@ var fillPinsTemplate = function () {
   mapPins.appendChild(fragment);
 };
 fillPinsTemplate(generatedAds);
+var fillTypeTemplate = function (arr) {
+  var template = document.querySelector('#map-template');
+  var type = template.content.querySelector('h4');
+  if (arr[0].offer.type === 'flat') {
+    type.textContent = 'Квартира';
+  } else if (arr[0].offer.type === 'bungalo') {
+    type.textContent = 'Бунгало';
+  } else {
+    type.textContent = 'Дом';
+  }
+};
 var fillFeatureTemplate = function (arr) {
   var template = document.querySelector('#map-template');
   var popupFeatures = template.content.querySelector('.popup__features');
@@ -94,7 +105,6 @@ var fillFeatureTemplate = function (arr) {
     newElement.classList.add('feature--' + arr[0].offer.features[i]);
     popupFeatures.appendChild(newElement.cloneNode(true));
   }
-
 };
 var fillPhotosTemplate = function (arr) {
   var template = document.querySelector('#map-template');
@@ -114,14 +124,13 @@ var fillAdsTemplate = function () {
   var title = template.content.querySelector('h3');
   var address = template.content.querySelector('p > small');
   var price = template.content.querySelector('.popup__price');
-  var type = template.content.querySelector('h4');
   var roomsAndGuests = template.content.querySelectorAll('p')[2];
   var checkinAndCheckout = template.content.querySelectorAll('p')[3];
   var description = template.content.querySelectorAll('p')[4];
   title.textContent = generatedAds[0].offer.title;
   address.textContent = generatedAds[0].offer.address;
   price.textContent = generatedAds[0].offer.price + ' \u20bd' + '/ночь';
-  type.content = generatedAds[0].offer.type;
+  fillTypeTemplate(generatedAds);
   roomsAndGuests.textContent = generatedAds[0].offer.rooms + ' комнаты для ' + generatedAds[0].offer.guests + ' гостей';
   checkinAndCheckout.textContent = 'Заезд после ' + generatedAds[0].offer.checkin + ' выезд до ' + generatedAds[0].offer.checkout;
   fillFeatureTemplate(generatedAds);
