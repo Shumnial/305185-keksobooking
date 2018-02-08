@@ -69,7 +69,7 @@ var generateRandomAds = function () {
   }
 };
 generateRandomAds();
-
+// Заполняет шаблон с метками
 var fillPinsTemplate = function () {
   var template = document.querySelector('#map-template');
   var button = template.content.querySelector('.map__pin');
@@ -85,6 +85,7 @@ var fillPinsTemplate = function () {
   mapPins.appendChild(fragment);
 };
 fillPinsTemplate(generatedAds);
+// Вспомогательная функция для вывода типа апартаментов
 var fillTypeTemplate = function (arr) {
   var template = document.querySelector('#map-template');
   var type = template.content.querySelector('h4');
@@ -96,6 +97,7 @@ var fillTypeTemplate = function (arr) {
     type.textContent = 'Дом';
   }
 };
+// Заполняет шаблон с преимуществами/удобствами
 var fillFeatureTemplate = function (arr) {
   var template = document.querySelector('#map-template');
   var popupFeatures = template.content.querySelector('.popup__features');
@@ -106,6 +108,7 @@ var fillFeatureTemplate = function (arr) {
     popupFeatures.appendChild(newElement.cloneNode(true));
   }
 };
+// Заполняет шаблон с фотографиями апартаментов
 var fillPhotosTemplate = function (arr) {
   var template = document.querySelector('#map-template');
   var photos = template.content.querySelector('.popup__pictures').children[0].children[0];
@@ -117,6 +120,7 @@ var fillPhotosTemplate = function (arr) {
     popupPictures.children[0].appendChild(photos.cloneNode(true));
   }
 };
+// Заполняет шаблон объявления
 var fillAdsTemplate = function () {
   var template = document.querySelector('#map-template');
   var mapCard = template.content.querySelector('.map__card');
