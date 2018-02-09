@@ -7,7 +7,11 @@ var adConstants = {
   MIN_ROOMS: 1,
   MAX_ROOMS: 5,
   MIN_GUESTS: 1,
-  MAX_GUESTS: 3
+  MAX_GUESTS: 3,
+  MIN_X: 300,
+  MAX_X: 900,
+  MIN_Y: 300,
+  MAX_Y: 900
 };
 // Возвращает случайное число в указаном диапазоне
 var getRandomNumber = function (min, max) {
@@ -76,45 +80,45 @@ var fillPinsTemplate = function () {
   var img = button.querySelector('img');
   var fragment = document.createDocumentFragment();
   var mapPins = document.querySelector('.map__pins');
-  generatedAds.forEach(function (element, i, arr) {
-    button.style.left = arr[i].location.x - 25 + 'px';
-    button.style.top = arr[i].location.y + 70 + 'px';
-    img.setAttribute('src', arr[i].author.avatar);
+  generatedAds.forEach(function (element) {
+    button.style.left = element.location.x - 25 + 'px';
+    button.style.top = element.location.y + 70 + 'px';
+    img.setAttribute('src', element.author.avatar);
     fragment.appendChild(button.cloneNode(true));
   });
   mapPins.appendChild(fragment);
 };
-fillPinsTemplate(generatedAds);
-// Вспомогательная функция для вывода типа апартаментов
-var fillTypeTemplate = function (arr) {
+fillPinsTemplate();
+// Выводит наименование типа апартаментов
+var fillTypeTemplate = function () {
   var template = document.querySelector('#map-template');
   var type = template.content.querySelector('h4');
-  if (arr[0].offer.type === 'flat') {
+  if (generatedAds[0].offer.type === 'flat') {
     type.textContent = 'Квартира';
-  } else if (arr[0].offer.type === 'bungalo') {
+  } else if (generatedAds[0].offer.type === 'bungalo') {
     type.textContent = 'Бунгало';
   } else {
     type.textContent = 'Дом';
   }
 };
 // Заполняет шаблон с преимуществами/удобствами
-var fillFeatureTemplate = function (arr) {
+var fillFeatureTemplate = function () {
   var template = document.querySelector('#map-template');
   var popupFeatures = template.content.querySelector('.popup__features');
-  for (var i = 0; i < arr[0].offer.features.length; i++) {
+  generatedAds[0].offer.features.forEach(function (element) {
     var newElement = document.createElement('li');
     newElement.classList.add('feature');
-    newElement.classList.add('feature--' + arr[0].offer.features[i]);
+    newElement.classList.add('feature--' + element);
     popupFeatures.appendChild(newElement.cloneNode(true));
-  }
+  });
 };
 // Заполняет шаблон с фотографиями апартаментов
-var fillPhotosTemplate = function (arr) {
+var fillPhotosTemplate = function () {
   var template = document.querySelector('#map-template');
   var photos = template.content.querySelector('.popup__pictures').children[0].children[0];
   var popupPictures = template.content.querySelector('.popup__pictures');
-  for (var i = 0; i < arr[0].offer.photos.length - 1; i++) {
-    photos.setAttribute('src', arr[0].offer.photos[i]);
+  for (var i = 0; i < generatedAds[0].offer.photos.length - 1; i++) {
+    photos.setAttribute('src', generatedAds[0].offer.photos[i]);
     photos.setAttribute('width', 40);
     photos.setAttribute('height', 40);
     popupPictures.children[0].appendChild(photos.cloneNode(true));
@@ -137,9 +141,9 @@ var fillAdsTemplate = function () {
   fillTypeTemplate(generatedAds);
   roomsAndGuests.textContent = generatedAds[0].offer.rooms + ' комнаты для ' + generatedAds[0].offer.guests + ' гостей';
   checkinAndCheckout.textContent = 'Заезд после ' + generatedAds[0].offer.checkin + ' выезд до ' + generatedAds[0].offer.checkout;
-  fillFeatureTemplate(generatedAds);
+  fillFeatureTemplate();
   description.textContent = generatedAds[0].offer.description;
-  fillPhotosTemplate(generatedAds);
+  fillPhotosTemplate();
   mapCard.querySelector('img').setAttribute('src', generatedAds[0].author.avatar);
   map.appendChild(mapCard);
 };
