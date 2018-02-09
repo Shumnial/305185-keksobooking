@@ -10,8 +10,8 @@ var adConstants = {
   MAX_GUESTS: 3,
   MIN_X: 300,
   MAX_X: 900,
-  MIN_Y: 300,
-  MAX_Y: 900
+  MIN_Y: 150,
+  MAX_Y: 500
 };
 // Возвращает случайное число в указаном диапазоне
 var getRandomNumber = function (min, max) {
