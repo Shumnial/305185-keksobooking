@@ -10,8 +10,8 @@ var adConstants = {
   MAX_GUESTS: 3,
   MIN_X: 300,
   MAX_X: 900,
-  MIN_Y: 150,
-  MAX_Y: 500
+  MIN_Y: 300,
+  MAX_Y: 900
 };
 // Возвращает случайное число в указаном диапазоне
 var getRandomNumber = function (min, max) {
@@ -76,7 +76,7 @@ generateRandomAds();
 // Заполняет шаблон с метками
 var fillPinsTemplate = function () {
   var template = document.querySelector('#map-template');
-  var button = template.content.querySelector('.map__pin');
+  var button = template.content.querySelector('.map__pin').cloneNode(true);
   var img = button.querySelector('img');
   var fragment = document.createDocumentFragment();
   var mapPins = document.querySelector('.map__pins');
@@ -89,60 +89,56 @@ var fillPinsTemplate = function () {
   mapPins.appendChild(fragment);
 };
 fillPinsTemplate();
-// Выводит наименование типа апартаментов
-var fillTypeTemplate = function () {
-  var template = document.querySelector('#map-template');
-  var type = template.content.querySelector('h4');
-  if (generatedAds[0].offer.type === 'flat') {
-    type.textContent = 'Квартира';
-  } else if (generatedAds[0].offer.type === 'bungalo') {
-    type.textContent = 'Бунгало';
-  } else {
-    type.textContent = 'Дом';
-  }
-};
-// Заполняет шаблон с преимуществами/удобствами
-var fillFeatureTemplate = function () {
-  var template = document.querySelector('#map-template');
-  var popupFeatures = template.content.querySelector('.popup__features');
-  generatedAds[0].offer.features.forEach(function (element) {
-    var newElement = document.createElement('li');
-    newElement.classList.add('feature');
-    newElement.classList.add('feature--' + element);
-    popupFeatures.appendChild(newElement.cloneNode(true));
-  });
-};
-// Заполняет шаблон с фотографиями апартаментов
-var fillPhotosTemplate = function () {
-  var template = document.querySelector('#map-template');
-  var photos = template.content.querySelector('.popup__pictures').children[0].children[0];
-  var popupPictures = template.content.querySelector('.popup__pictures');
-  for (var i = 0; i < generatedAds[0].offer.photos.length - 1; i++) {
-    photos.setAttribute('src', generatedAds[0].offer.photos[i]);
-    photos.setAttribute('width', 40);
-    photos.setAttribute('height', 40);
-    popupPictures.children[0].appendChild(photos.cloneNode(true));
-  }
-};
 // Заполняет шаблон объявления
 var fillAdsTemplate = function () {
-  var template = document.querySelector('#map-template');
-  var mapCard = template.content.querySelector('.map__card');
   var map = document.querySelector('.map');
-  var title = template.content.querySelector('h3');
-  var address = template.content.querySelector('p > small');
-  var price = template.content.querySelector('.popup__price');
-  var roomsAndGuests = template.content.querySelectorAll('p')[2];
-  var checkinAndCheckout = template.content.querySelectorAll('p')[3];
-  var description = template.content.querySelectorAll('p')[4];
+  var template = document.querySelector('#map-template');
+  var mapCard = template.content.querySelector('.map__card').cloneNode(true);
+  var title = mapCard.querySelector('h3');
+  var address = mapCard.querySelector('p > small');
+  var price = mapCard.querySelector('.popup__price');
+  var roomsAndGuests = mapCard.querySelectorAll('p')[2];
+  var checkinAndCheckout = mapCard.querySelectorAll('p')[3];
+  var description = mapCard.querySelectorAll('p')[4];
   title.textContent = generatedAds[0].offer.title;
   address.textContent = generatedAds[0].offer.address;
   price.textContent = generatedAds[0].offer.price + ' \u20bd' + '/ночь';
-  fillTypeTemplate(generatedAds);
+  // Выводит тип апартаментов
+  var fillTypeTemplate = function () {
+    var type = mapCard.querySelector('h4').cloneNode(true);
+    var appartmentsType = {
+      'flat': 'Квартира',
+      'house': 'Дом',
+      'bungalo': 'Бунгало'
+    };
+    type.textContent = appartmentsType[generatedAds[0].offer.type];
+  };
+  fillTypeTemplate();
   roomsAndGuests.textContent = generatedAds[0].offer.rooms + ' комнаты для ' + generatedAds[0].offer.guests + ' гостей';
   checkinAndCheckout.textContent = 'Заезд после ' + generatedAds[0].offer.checkin + ' выезд до ' + generatedAds[0].offer.checkout;
+  // Заполняет шаблон с преимуществами/удобствами
+  var fillFeatureTemplate = function () {
+    var popupFeatures = mapCard.querySelector('.popup__features');
+    generatedAds[0].offer.features.forEach(function (element) {
+      var newElement = document.createElement('li');
+      newElement.classList.add('feature');
+      newElement.classList.add('feature--' + element);
+      popupFeatures.appendChild(newElement.cloneNode(true));
+    });
+  };
   fillFeatureTemplate();
   description.textContent = generatedAds[0].offer.description;
+  // Заполняет шаблон с фотографиями апартаментов
+  var fillPhotosTemplate = function () {
+    var popupPictures = mapCard.querySelector('.popup__pictures');
+    var photo = mapCard.querySelector('.popup__pictures').children[0].children[0];
+    for (var i = 0; i < generatedAds[0].offer.photos.length - 1; i++) {
+      photo.setAttribute('src', generatedAds[0].offer.photos[i]);
+      photo.setAttribute('width', 40);
+      photo.setAttribute('height', 40);
+      popupPictures.children[0].appendChild(photo.cloneNode(true));
+    }
+  };
   fillPhotosTemplate();
   mapCard.querySelector('img').setAttribute('src', generatedAds[0].author.avatar);
   map.appendChild(mapCard);
