@@ -141,6 +141,6 @@ var fillAdsTemplate = function () {
   };
   fillPhotosTemplate();
   mapCard.querySelector('img').setAttribute('src', generatedAds[0].author.avatar);
-  map.appendChild(mapCard);
+  map.insertBefore(mapCard, document.querySelector('.map__filters-container'));
 };
 fillAdsTemplate();
