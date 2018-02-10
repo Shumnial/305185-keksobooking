@@ -89,7 +89,7 @@ var fillPinsTemplate = function () {
   mapPins.appendChild(fragment);
 };
 fillPinsTemplate();
-// Заполняет шаблон объявления
+// Заполняет клонированную ноду шаблона с объявлением
 var fillAdsTemplate = function () {
   var map = document.querySelector('.map');
   var template = document.querySelector('#map-template');
@@ -103,9 +103,9 @@ var fillAdsTemplate = function () {
   title.textContent = generatedAds[0].offer.title;
   address.textContent = generatedAds[0].offer.address;
   price.textContent = generatedAds[0].offer.price + ' \u20bd' + '/ночь';
-  // Выводит тип апартаментов
+  // Заполняет клонированную ноду шаблона с типами апартаментов
   var fillTypeTemplate = function () {
-    var type = mapCard.querySelector('h4').cloneNode(true);
+    var type = mapCard.querySelector('h4');
     var appartmentsType = {
       'flat': 'Квартира',
       'house': 'Дом',
@@ -116,19 +116,19 @@ var fillAdsTemplate = function () {
   fillTypeTemplate();
   roomsAndGuests.textContent = generatedAds[0].offer.rooms + ' комнаты для ' + generatedAds[0].offer.guests + ' гостей';
   checkinAndCheckout.textContent = 'Заезд после ' + generatedAds[0].offer.checkin + ' выезд до ' + generatedAds[0].offer.checkout;
-  // Заполняет шаблон с преимуществами/удобствами
+  // Заполняет клонированную ноду шаблона с преимуществами
   var fillFeatureTemplate = function () {
     var popupFeatures = mapCard.querySelector('.popup__features');
     generatedAds[0].offer.features.forEach(function (element) {
       var newElement = document.createElement('li');
       newElement.classList.add('feature');
       newElement.classList.add('feature--' + element);
-      popupFeatures.appendChild(newElement.cloneNode(true));
+      popupFeatures.appendChild(newElement);
     });
   };
   fillFeatureTemplate();
   description.textContent = generatedAds[0].offer.description;
-  // Заполняет шаблон с фотографиями апартаментов
+  // Заполняет клонированную ноду шаблона с фотографиями
   var fillPhotosTemplate = function () {
     var popupPictures = mapCard.querySelector('.popup__pictures');
     var photo = mapCard.querySelector('.popup__pictures').children[0].children[0];
@@ -136,7 +136,7 @@ var fillAdsTemplate = function () {
       photo.setAttribute('src', generatedAds[0].offer.photos[i]);
       photo.setAttribute('width', 40);
       photo.setAttribute('height', 40);
-      popupPictures.children[0].appendChild(photo.cloneNode(true));
+      popupPictures.children[0].appendChild(photo.cloneNode());
     }
   };
   fillPhotosTemplate();
