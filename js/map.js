@@ -41,8 +41,7 @@ var getRandomElement = function (arr) {
 };
 // Возвращает массив со случайной длиной
 var getRandomLength = function (arr) {
-  arr.length = getRandomNumber(1, arr.length);
-  return arr;
+  return arr.slice(getRandomNumber(0, arr.length), getRandomNumber(1, arr.length));
 };
 // Перемешивает элементы массива
 var shuffleArray = function (arr) {
