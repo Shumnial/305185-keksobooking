@@ -33,7 +33,7 @@ var roomsAndGuests = mapCard.querySelectorAll('p')[2];
 var checkinAndCheckout = mapCard.querySelectorAll('p')[3];
 var description = mapCard.querySelectorAll('p')[4];
 var popupPictures = mapCard.querySelector('.popup__pictures');
-var photo = mapCard.querySelector('.popup__pictures').children[0].children[0];
+var photo = mapCard.querySelector('.popup__pictures').children[0].children[0].cloneNode();
 var popupFeatures = mapCard.querySelector('.popup__features');
 var type = mapCard.querySelector('h4');
 // Возвращает случайное число в указаном диапазоне
@@ -123,7 +123,7 @@ var fillAdsTemplate = function (arr) {
     popupFeatures.appendChild(newElement);
   });
   // Заполняет клонированную ноду шаблона с фотографиями
-  for (var i = 0; i < arr.offer.photos.length - 1; i++) {
+  for (var i = 0; i < arr.offer.photos.length; i++) {
     photo.setAttribute('src', arr.offer.photos[i]);
     photo.setAttribute('width', 40);
     photo.setAttribute('height', 40);
