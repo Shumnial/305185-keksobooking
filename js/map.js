@@ -16,7 +16,12 @@ var adConstants = {
   TYPES: ['flat', 'house', 'bungalo'],
   CLOCKS: ['12:00', '13:00', '14:00'],
   FEATURES: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
-  PHOTOS: ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg']
+  PHOTOS: ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'],
+  APARTMENTS_TYPE: {
+    'flat': 'Квартира',
+    'house': 'Дом',
+    'bungalo': 'Бунгало'
+  }
 };
 var map = document.querySelector('.map');
 var template = document.querySelector('#map-template');
@@ -102,35 +107,29 @@ var fillPinsTemplate = function () {
 };
 fillPinsTemplate();
 // Заполняет клонированную ноду шаблона с объявлением
-var fillAdsTemplate = function () {
-  title.textContent = generatedAds[0].offer.title;
-  address.textContent = generatedAds[0].offer.address;
-  price.textContent = generatedAds[0].offer.price + ' \u20bd' + '/ночь';
-  roomsAndGuests.textContent = generatedAds[0].offer.rooms + ' комнаты для ' + generatedAds[0].offer.guests + ' гостей';
-  checkinAndCheckout.textContent = 'Заезд после ' + generatedAds[0].offer.checkin + ' выезд до ' + generatedAds[0].offer.checkout;
-  description.textContent = generatedAds[0].offer.description;
-  // Заполняет клонированную ноду шаблона с типами апартаментов
-  var appartmentsType = {
-    'flat': 'Квартира',
-    'house': 'Дом',
-    'bungalo': 'Бунгало'
-  };
-  type.textContent = appartmentsType[generatedAds[0].offer.type];
+var fillAdsTemplate = function (arr) {
+  title.textContent = arr.offer.title;
+  address.textContent = arr.offer.address;
+  price.textContent = arr.offer.price + ' \u20bd' + '/ночь';
+  roomsAndGuests.textContent = arr.offer.rooms + ' комнаты для ' + arr.offer.guests + ' гостей';
+  checkinAndCheckout.textContent = 'Заезд после ' + arr.offer.checkin + ' выезд до ' + arr.offer.checkout;
+  description.textContent = arr.offer.description;
+  type.textContent = adConstants.APARTMENTS_TYPE[arr.offer.type];
   // Заполняет клонированную ноду шаблона с преимуществами
-  generatedAds[0].offer.features.forEach(function (element) {
+  arr.offer.features.forEach(function (element) {
     var newElement = document.createElement('li');
     newElement.classList.add('feature');
     newElement.classList.add('feature--' + element);
     popupFeatures.appendChild(newElement);
   });
   // Заполняет клонированную ноду шаблона с фотографиями
-  for (var i = 0; i < generatedAds[0].offer.photos.length - 1; i++) {
-    photo.setAttribute('src', generatedAds[0].offer.photos[i]);
+  for (var i = 0; i < arr.offer.photos.length - 1; i++) {
+    photo.setAttribute('src', arr.offer.photos[i]);
     photo.setAttribute('width', 40);
     photo.setAttribute('height', 40);
     popupPictures.children[0].appendChild(photo.cloneNode());
   }
-  mapCard.querySelector('img').setAttribute('src', generatedAds[0].author.avatar);
+  mapCard.querySelector('img').setAttribute('src', arr.author.avatar);
   map.insertBefore(mapCard, document.querySelector('.map__filters-container'));
 };
-fillAdsTemplate();
+fillAdsTemplate(generatedAds[0]);
