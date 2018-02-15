@@ -36,6 +36,8 @@ var popupPictures = mapCard.querySelector('.popup__pictures');
 var photo = mapCard.querySelector('.popup__pictures').children[0].children[0].cloneNode();
 var popupFeatures = mapCard.querySelector('.popup__features');
 var type = mapCard.querySelector('h4');
+var mainPin = document.querySelector('.map__pin--main');
+var noticeForm = document.querySelector('.notice__form');
 // Возвращает случайное число в указаном диапазоне
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -58,8 +60,6 @@ var shuffleArray = function (arr) {
   }
   return arr;
 };
-// Убирает вспомогательный класс у блока map
-document.querySelector('.map').classList.remove('map--faded');
 // Генерирует рандомные объявления
 var generatedAds = [];
 var generateRandomAds = function () {
@@ -105,7 +105,6 @@ var fillPinsTemplate = function () {
   });
   mapPins.appendChild(fragment);
 };
-fillPinsTemplate();
 // Заполняет клонированную ноду шаблона с объявлением
 var fillAdsTemplate = function (arr) {
   title.textContent = arr.offer.title;
@@ -130,6 +129,20 @@ var fillAdsTemplate = function (arr) {
     popupPictures.children[0].appendChild(photo.cloneNode());
   }
   mapCard.querySelector('img').setAttribute('src', arr.author.avatar);
+  mapCard.style.display = 'none';
   map.insertBefore(mapCard, document.querySelector('.map__filters-container'));
 };
 fillAdsTemplate(generatedAds[0]);
+
+var onMainPinClick = function () {
+  map.classList.remove('map--faded');
+  noticeForm.classList.remove('notice__form--disabled');
+  var fieldset = noticeForm.querySelectorAll('fieldset');
+  for (var i = 0; i < fieldset.length; i++) {
+    fieldset[i].removeAttribute('disabled');
+  }
+  noticeForm.querySelector('.form__submit').removeAttribute('disabled');
+  noticeForm.querySelector('.form__reset').removeAttribute('disabled');
+  fillPinsTemplate();
+};
+mainPin.addEventListener('mouseup', onMainPinClick);
