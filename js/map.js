@@ -38,6 +38,7 @@ var popupFeatures = mapCard.querySelector('.popup__features');
 var type = mapCard.querySelector('h4');
 var mainPin = document.querySelector('.map__pin--main');
 var noticeForm = document.querySelector('.notice__form');
+var mapPins = map.querySelector('.map__pins');
 // Возвращает случайное число в указаном диапазоне
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -96,7 +97,6 @@ var fillPinsTemplate = function () {
   var button = template.content.querySelector('.map__pin').cloneNode(true);
   var img = button.querySelector('img');
   var fragment = document.createDocumentFragment();
-  var mapPins = document.querySelector('.map__pins');
   generatedAds.forEach(function (element) {
     button.style.left = element.location.x - 25 + 'px';
     button.style.top = element.location.y + 70 + 'px';
@@ -146,3 +146,11 @@ var onMainPinClick = function () {
   fillPinsTemplate();
 };
 mainPin.addEventListener('mouseup', onMainPinClick);
+var onPinClick = function (evt) {
+  for (var i = 0; i < 9; i++) {
+    if (evt.target.className !== 'map__pinsoverlay' && evt.target.className !== 'map__pin--main' && evt.target.parentNode === document.querySelector('.map__pins') || evt.target.tagName === 'IMG' && !evt.target.parentNode.classList.contains('map__pin--main') && evt.target.parentNode.parentNode === document.querySelector('.map__pins')) {
+      mapCard.style.display = 'block';
+    }
+  }
+};
+mapPins.addEventListener('click', onPinClick);
