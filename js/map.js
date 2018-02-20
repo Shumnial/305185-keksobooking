@@ -21,7 +21,8 @@ var adConstants = {
     'flat': 'Квартира',
     'house': 'Дом',
     'bungalo': 'Бунгало'
-  }
+  },
+  AVATARS: ['img/avatars/user01.png', 'img/avatars/user02.png', 'img/avatars/user03.png', 'img/avatars/user04.png', 'img/avatars/user05.png', 'img/avatars/user06.png', 'img/avatars/user07.png', 'img/avatars/user08.png']
 };
 var map = document.querySelector('.map');
 var template = document.querySelector('#map-template');
@@ -61,6 +62,7 @@ var shuffleArray = function (arr) {
   }
   return arr;
 };
+shuffleArray(adConstants.AVATARS);
 // Генерирует рандомные объявления
 var generatedAds = [];
 var generateRandomAds = function () {
@@ -68,7 +70,7 @@ var generateRandomAds = function () {
     var locationCoords = [getRandomNumber(adConstants.MIN_X, adConstants.MAX_X), getRandomNumber(adConstants.MIN_Y, adConstants.MAX_Y)];
     var ads = {
       'author': {
-        'avatar': 'img/avatars/user' + 0 + getRandomNumber(1, adConstants.OBJECTS_COUNT) + '.png'
+        'avatar': adConstants.AVATARS[i]
       },
       'offer': {
         'title': getRandomElement(adConstants.TITLES),
@@ -132,7 +134,6 @@ var fillAdsTemplate = function (arr) {
   mapCard.style.display = 'none';
   map.insertBefore(mapCard, document.querySelector('.map__filters-container'));
 };
-fillAdsTemplate(generatedAds[0]);
 
 var onMainPinClick = function () {
   map.classList.remove('map--faded');
@@ -145,12 +146,20 @@ var onMainPinClick = function () {
   noticeForm.querySelector('.form__reset').removeAttribute('disabled');
   fillPinsTemplate();
 };
-mainPin.addEventListener('mouseup', onMainPinClick);
+// Проверяет на какой DOM-элемент попал клик. Заполняет поля карточки в соответствии с тем, на каком пине было произведено нажатие
 var onPinClick = function (evt) {
-  for (var i = 0; i < 9; i++) {
-    if (evt.target.className !== 'map__pinsoverlay' && evt.target.className !== 'map__pin--main' && evt.target.parentNode === document.querySelector('.map__pins') || evt.target.tagName === 'IMG' && !evt.target.parentNode.classList.contains('map__pin--main') && evt.target.parentNode.parentNode === document.querySelector('.map__pins')) {
-      mapCard.style.display = 'block';
+  if (evt.target !== mapPins) {
+    var currentPin = evt.target;
+    while (currentPin.className !== 'map__pin') {
+      currentPin = currentPin.parentNode;
+    }
+    for (var i = 0; i < adConstants.OBJECTS_COUNT - 1; i++) {
+      if (currentPin.children[0].getAttribute('src') === generatedAds[i].author.avatar) {
+        fillAdsTemplate(generatedAds[i]);
+        mapCard.style.display = 'block';
+      }
     }
   }
 };
+mainPin.addEventListener('mouseup', onMainPinClick);
 mapPins.addEventListener('click', onPinClick);
