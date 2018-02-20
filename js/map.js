@@ -1,5 +1,8 @@
 'use strict';
 // CONSTANTS
+var keyConstants = {
+  ESC__KEYCODE: 27
+};
 var adConstants = {
   OBJECTS_COUNT: 8,
   MIN_PRICE: 1000,
@@ -40,6 +43,7 @@ var type = mapCard.querySelector('h4');
 var mainPin = document.querySelector('.map__pin--main');
 var noticeForm = document.querySelector('.notice__form');
 var mapPins = map.querySelector('.map__pins');
+var popupClose = mapCard.querySelector('.popup__close');
 // Возвращает случайное число в указаном диапазоне
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -131,7 +135,6 @@ var fillAdsTemplate = function (arr) {
     popupPictures.children[0].appendChild(photo.cloneNode());
   }
   mapCard.querySelector('img').setAttribute('src', arr.author.avatar);
-  mapCard.style.display = 'none';
   map.insertBefore(mapCard, document.querySelector('.map__filters-container'));
 };
 
@@ -153,13 +156,27 @@ var onPinClick = function (evt) {
     while (currentPin.className !== 'map__pin') {
       currentPin = currentPin.parentNode;
     }
-    for (var i = 0; i < adConstants.OBJECTS_COUNT - 1; i++) {
+    for (var i = 0; i < adConstants.OBJECTS_COUNT; i++) {
       if (currentPin.children[0].getAttribute('src') === generatedAds[i].author.avatar) {
         fillAdsTemplate(generatedAds[i]);
-        mapCard.style.display = 'block';
+        openPopup();
       }
     }
   }
 };
+var openPopup = function () {
+  mapCard.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+var closePopup = function () {
+  mapCard.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === keyConstants.ESC__KEYCODE) {
+    closePopup();
+  }
+};
 mainPin.addEventListener('mouseup', onMainPinClick);
 mapPins.addEventListener('click', onPinClick);
+popupClose.addEventListener('click', closePopup);
