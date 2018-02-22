@@ -98,16 +98,20 @@ var generateRandomAds = function () {
   }
 };
 generateRandomAds();
-// Заполняет шаблон с метками
+// Заполняет клонированную ноду шаблона с метками
 var fillPinsTemplate = function () {
   var button = template.content.querySelector('.map__pin').cloneNode(true);
   var img = button.querySelector('img');
   var fragment = document.createDocumentFragment();
-  generatedAds.forEach(function (element) {
+  generatedAds.forEach(function (element, i) {
     button.style.left = element.location.x - 25 + 'px';
     button.style.top = element.location.y + 70 + 'px';
     img.setAttribute('src', element.author.avatar);
-    fragment.appendChild(button.cloneNode(true));
+    var pinNode = button.cloneNode(true);
+    pinNode.addEventListener('click', function () {
+      onPinClick(i);
+    });
+    fragment.appendChild(pinNode);
   });
   mapPins.appendChild(fragment);
 };
@@ -150,19 +154,9 @@ var onMainPinClick = function () {
   fillPinsTemplate();
 };
 // Проверяет на какой DOM-элемент попал клик. Заполняет поля карточки в соответствии с тем, на каком пине было произведено нажатие
-var onPinClick = function (evt) {
-  if (evt.target !== mapPins) {
-    var currentPin = evt.target;
-    while (currentPin.className !== 'map__pin') {
-      currentPin = currentPin.parentNode;
-    }
-    for (var i = 0; i < adConstants.OBJECTS_COUNT; i++) {
-      if (currentPin.children[0].getAttribute('src') === generatedAds[i].author.avatar) {
-        fillAdsTemplate(generatedAds[i]);
-        openPopup();
-      }
-    }
-  }
+var onPinClick = function (i) {
+  fillAdsTemplate(generatedAds[i]);
+  openPopup();
 };
 var openPopup = function () {
   mapCard.classList.remove('hidden');
