@@ -125,6 +125,7 @@ var fillAdsTemplate = function (arr) {
   description.textContent = arr.offer.description;
   type.textContent = adConstants.APARTMENTS_TYPE[arr.offer.type];
   // Заполняет клонированную ноду шаблона с преимуществами
+  popupFeatures.textContent = null;
   arr.offer.features.forEach(function (element) {
     var newElement = document.createElement('li');
     newElement.classList.add('feature');
@@ -132,6 +133,7 @@ var fillAdsTemplate = function (arr) {
     popupFeatures.appendChild(newElement);
   });
   // Заполняет клонированную ноду шаблона с фотографиями
+  popupPictures.children[0].textContent = null;
   for (var i = 0; i < arr.offer.photos.length; i++) {
     photo.setAttribute('src', arr.offer.photos[i]);
     photo.setAttribute('width', 40);
@@ -172,5 +174,4 @@ var onPopupEscPress = function (evt) {
   }
 };
 mainPin.addEventListener('mouseup', onMainPinClick);
-mapPins.addEventListener('click', onPinClick);
 popupClose.addEventListener('click', closePopup);
