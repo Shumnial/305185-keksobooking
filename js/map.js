@@ -44,6 +44,8 @@ var mainPin = document.querySelector('.map__pin--main');
 var noticeForm = document.querySelector('.notice__form');
 var mapPins = map.querySelector('.map__pins');
 var popupClose = mapCard.querySelector('.popup__close');
+var guestsCapacity = document.querySelector('#capacity');
+var roomNumber = document.querySelector('#room_number');
 // Возвращает случайное число в указаном диапазоне
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -173,5 +175,21 @@ var onPopupEscPress = function (evt) {
     closePopup();
   }
 };
+
+var onRoomsChange = function () {
+  guestsCapacity.setCustomValidity('');
+  if (roomNumber.value === '100' && guestsCapacity.value !== '0') {
+    guestsCapacity.setCustomValidity('Данное жилье не предназначено для гостей');
+  } else if (roomNumber.value === '1' && guestsCapacity.value > roomNumber.value || guestsCapacity.value === '0') {
+    guestsCapacity.setCustomValidity('Количество гостей не может быть болеe ' + roomNumber.value);
+  } else if (roomNumber.value === '2' && guestsCapacity.value > roomNumber.value || guestsCapacity.value === '0') {
+    guestsCapacity.setCustomValidity('Количество гостей не может быть болеe ' + roomNumber.value);
+  } else if (roomNumber.value === '3' && guestsCapacity.value > roomNumber.value || guestsCapacity.value === '0') {
+    guestsCapacity.setCustomValidity('Количество гостей не может быть болеe ' + roomNumber.value);
+  }
+};
+
+roomNumber.addEventListener('change', onRoomsChange);
+guestsCapacity.addEventListener('change', onRoomsChange);
 mainPin.addEventListener('mouseup', onMainPinClick);
 popupClose.addEventListener('click', closePopup);
