@@ -176,17 +176,26 @@ var onPopupEscPress = function (evt) {
   }
 };
 
+var roomsAndGuestsList = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0']
+};
 var onRoomsChange = function () {
   guestsCapacity.setCustomValidity('');
-  if (roomNumber.value === '100' && guestsCapacity.value !== '0') {
-    guestsCapacity.setCustomValidity('Данное жилье не предназначено для гостей');
-  } else if (roomNumber.value === '1' && guestsCapacity.value > roomNumber.value || guestsCapacity.value === '0') {
-    guestsCapacity.setCustomValidity('Количество гостей не может быть болеe ' + roomNumber.value);
-  } else if (roomNumber.value === '2' && guestsCapacity.value > roomNumber.value || guestsCapacity.value === '0') {
-    guestsCapacity.setCustomValidity('Количество гостей не может быть болеe ' + roomNumber.value);
-  } else if (roomNumber.value === '3' && guestsCapacity.value > roomNumber.value || guestsCapacity.value === '0') {
-    guestsCapacity.setCustomValidity('Количество гостей не может быть болеe ' + roomNumber.value);
+  if (!roomsAndGuestsList[roomNumber.value].includes(guestsCapacity.value)) {
+    guestsCapacity.setCustomValidity('Неприемлемое значение гостей');
   }
+  /* if (roomNumber.value === '100' && guestsCapacity.value !== '0') {
+    guestsCapacity.setCustomValidity('Данное жилье не предназначено для гостей');
+  } else if (roomNumber.value === '1' && guestsCapacity.value > roomNumber.value) {
+    guestsCapacity.setCustomValidity('Количество гостей не может быть болеe ' + roomNumber.value);
+  } else if (roomNumber.value === '2' && guestsCapacity.value > roomNumber.value) {
+    guestsCapacity.setCustomValidity('Количество гостей не может быть болеe ' + roomNumber.value);
+  } else if (roomNumber.value === '3' && guestsCapacity.value > roomNumber.value) {
+    guestsCapacity.setCustomValidity('Количество гостей не может быть болеe ' + roomNumber.value);
+  } */
 };
 
 roomNumber.addEventListener('change', onRoomsChange);
