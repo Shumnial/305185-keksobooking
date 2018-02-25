@@ -184,7 +184,7 @@ var roomsAndGuestsList = {
 };
 var onRoomsChange = function () {
   guestsCapacity.setCustomValidity('');
-  if (!roomsAndGuestsList[roomNumber.value].includes(guestsCapacity.value)) {
+  if (roomsAndGuestsList[roomNumber.value].indexOf(guestsCapacity.value) === -1) {
     guestsCapacity.setCustomValidity('Неприемлемое значение гостей');
   }
   /* if (roomNumber.value === '100' && guestsCapacity.value !== '0') {
