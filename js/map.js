@@ -199,6 +199,7 @@ var onRoomsChange = function () {
     guestsCapacity.setCustomValidity('Количество гостей не может быть больше количества комнат, либо данное жилье не предназначено для гостей (100 комнат)');
   }
 };
+onRoomsChange();
 
 var onTypeChange = function () {
   apartmentsPrice.setCustomValidity('');
@@ -207,18 +208,21 @@ var onTypeChange = function () {
     apartmentsPrice.setCustomValidity('Минимальная стоимость не может быть меньше ' + typeAndPrice[apartmentsType.value]);
   }
 };
+onTypeChange();
 
 var onCheckinChange = function () {
   if (checkinTime.value !== checkoutTime.value) {
     checkoutTime.value = checkinTime.value;
   }
 };
+onCheckinChange();
 
 var onCheckoutChange = function () {
   if (checkinTime.value !== checkoutTime.value) {
     checkinTime.value = checkoutTime.value;
   }
 };
+onCheckoutChange();
 
 checkinTime.addEventListener('change', onCheckinChange);
 checkoutTime.addEventListener('change', onCheckoutChange);
