@@ -202,7 +202,7 @@ var onRoomsChange = function () {
 
 var onTypeChange = function () {
   apartmentsPrice.setCustomValidity('');
-  apartmentsPrice.setAttribute('placeholder', 'Мин. ' + typeAndPrice[apartmentsType.value]);
+  apartmentsPrice.setAttribute('placeholder', 'мин. ' + typeAndPrice[apartmentsType.value]);
   if (+apartmentsPrice.value < +typeAndPrice[apartmentsType.value]) {
     apartmentsPrice.setCustomValidity('Минимальная стоимость не может быть меньше ' + typeAndPrice[apartmentsType.value]);
   }
