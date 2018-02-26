@@ -44,6 +44,12 @@ var mainPin = document.querySelector('.map__pin--main');
 var noticeForm = document.querySelector('.notice__form');
 var mapPins = map.querySelector('.map__pins');
 var popupClose = mapCard.querySelector('.popup__close');
+var guestsCapacity = document.querySelector('#capacity');
+var roomNumber = document.querySelector('#room_number');
+var apartmentsType = document.querySelector('#type');
+var apartmentsPrice = document.querySelector('#price');
+var checkinTime = document.querySelector('#timein');
+var checkoutTime = document.querySelector('#timeout');
 // Возвращает случайное число в указаном диапазоне
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -173,5 +179,56 @@ var onPopupEscPress = function (evt) {
     closePopup();
   }
 };
+
+var roomsAndGuestsList = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0']
+};
+
+var typeAndPrice = {
+  'bungalo': ['0'],
+  'flat': ['1000'],
+  'house': ['5000'],
+  'palace': ['10000']
+};
+var onRoomsChange = function () {
+  guestsCapacity.setCustomValidity('');
+  if (roomsAndGuestsList[roomNumber.value].indexOf(guestsCapacity.value) === -1) {
+    guestsCapacity.setCustomValidity('Количество гостей не может быть больше количества комнат, либо данное жилье не предназначено для гостей (100 комнат)');
+  }
+};
+var onTypeChange = function () {
+  apartmentsPrice.setCustomValidity('');
+  apartmentsPrice.setAttribute('placeholder', 'мин. ' + typeAndPrice[apartmentsType.value]);
+  if (+apartmentsPrice.value < +typeAndPrice[apartmentsType.value]) {
+    apartmentsPrice.setCustomValidity('Минимальная стоимость не может быть меньше ' + typeAndPrice[apartmentsType.value]);
+  }
+};
+var onCheckinChange = function () {
+  if (checkinTime.value !== checkoutTime.value) {
+    checkoutTime.value = checkinTime.value;
+  }
+};
+var onCheckoutChange = function () {
+  if (checkinTime.value !== checkoutTime.value) {
+    checkinTime.value = checkoutTime.value;
+  }
+};
+// Запускает проверку полей на старте во избежание отправки формы с невалидными значениями
+var checkValidityOnStart = function () {
+  onRoomsChange();
+  onTypeChange();
+  onCheckinChange();
+  onCheckoutChange();
+};
+checkValidityOnStart();
+checkinTime.addEventListener('change', onCheckinChange);
+checkoutTime.addEventListener('change', onCheckoutChange);
+apartmentsType.addEventListener('change', onTypeChange);
+apartmentsPrice.addEventListener('change', onTypeChange);
+roomNumber.addEventListener('change', onRoomsChange);
+guestsCapacity.addEventListener('change', onRoomsChange);
 mainPin.addEventListener('mouseup', onMainPinClick);
 popupClose.addEventListener('click', closePopup);
