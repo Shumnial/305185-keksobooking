@@ -57,6 +57,7 @@
     window.map.insertAdCard(mapCard);
   };
   fillAdsTemplate(window.data.generatedAds[0]);
+  popupClose.addEventListener('click', closePopup);
   window.card = {
     openPopup: function (i) {
       fillAdsTemplate(window.data.generatedAds[i]);
