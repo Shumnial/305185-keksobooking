@@ -34,10 +34,13 @@
       apartmentsPrice.setCustomValidity('Минимальная стоимость не может быть меньше ' + typeAndPrice[apartmentsType.value]);
     }
   };
-  var synchronizeTimeFields = function () {
+  var checkinTimeSync = function () {
     if (checkinTime.value !== checkoutTime.value) {
       checkoutTime.value = checkinTime.value;
-    } else if (checkinTime.value !== checkoutTime.value) {
+    }
+  };
+  var checkoutTimeSync = function () {
+    if (checkinTime.value !== checkoutTime.value) {
       checkinTime.value = checkoutTime.value;
     }
   };
@@ -45,10 +48,12 @@
   var checkValidityOnStart = function () {
     onRoomsChange();
     onTypeChange();
-    synchronizeTimeFields();
+    checkinTimeSync();
+    checkoutTimeSync();
   };
   checkValidityOnStart();
-  checkinTime.addEventListener('change', synchronizeTimeFields);
+  checkinTime.addEventListener('change', checkinTimeSync);
+  checkoutTime.addEventListener('change', checkoutTimeSync);
   apartmentsType.addEventListener('change', onTypeChange);
   apartmentsPrice.addEventListener('change', onTypeChange);
   roomNumber.addEventListener('change', onRoomsChange);
