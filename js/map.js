@@ -30,8 +30,12 @@
   };
   mainPin.addEventListener('mouseup', onMainPinClick);
   popupClose.addEventListener('click', closePopup);
-  window.map = {onPinClick: function (i) {
-    window.card.fillAdsTemplate(window.data.generatedAds[i]);
-    openPopup();
-  }};
+  window.map = {
+    insertAdCard: function (adElement) {
+      return map.insertBefore(adElement, document.querySelector('.map__filters-container'));
+    },
+    onPinClick: function (i) {
+      window.card.fillAdsTemplate(window.data.generatedAds[i]);
+      openPopup();
+    }};
 })();

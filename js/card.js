@@ -7,7 +7,6 @@
       'bungalo': 'Бунгало'
     }
   };
-  var map = document.querySelector('.map');
   var template = document.querySelector('#map-template');
   var mapCard = template.content.querySelector('.map__card').cloneNode(true);
   var title = mapCard.querySelector('h3');
@@ -47,7 +46,7 @@
         popupPictures.children[0].appendChild(photo.cloneNode());
       }
       mapCard.querySelector('img').setAttribute('src', arr.author.avatar);
-      map.insertBefore(mapCard, document.querySelector('.map__filters-container'));
+      window.map.insertAdCard(mapCard);
     }};
   window.card.fillAdsTemplate(window.data.generatedAds[0]);
 })();
