@@ -1,4 +1,5 @@
 'use strict';
+// Содержит вспомогательные функции для генерации элементов массива
 (function () {
   var adConstants = {
     OBJECTS_COUNT: 8,

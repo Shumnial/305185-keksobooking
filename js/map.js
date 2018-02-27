@@ -1,4 +1,5 @@
 'use strict';
+// Данный модуль заключает в себе результат модулей card и pin, отрисовывая пины и карточку объявления
 (function () {
   var map = document.querySelector('.map');
   var mainPin = document.querySelector('.map__pin--main');

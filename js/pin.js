@@ -1,4 +1,5 @@
 'use strict';
+// Данный модуль служит для генерации пинов на карте
 (function () {
   // Заполняет клонированную ноду шаблона с метками
   var mapPins = document.querySelector('.map__pins');

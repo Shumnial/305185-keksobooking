@@ -1,4 +1,5 @@
 'use strict';
+// Данный модуль служит для заполнением полей в карточке объявления
 (function () {
   var adConstants = {
     APARTMENTS_TYPE: {
@@ -56,7 +57,6 @@
     mapCard.querySelector('img').setAttribute('src', arr.author.avatar);
     window.map.insertAdCard(mapCard);
   };
-  fillAdsTemplate(window.data.generatedAds[0]);
   popupClose.addEventListener('click', closePopup);
   window.card = {
     openPopup: function (i) {
