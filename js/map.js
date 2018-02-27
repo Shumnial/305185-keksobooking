@@ -19,7 +19,7 @@
     insertAdCard: function (adElement) {
       map.insertBefore(adElement, document.querySelector('.map__filters-container'));
     },
-    onPinClick: function () {
-      window.card.openPopup();
+    onPinClick: function (i) {
+      window.card.openPopup(i);
     }};
 })();
