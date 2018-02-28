@@ -65,8 +65,6 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
-
-
   window.map = {
     insertAdCard: function (adElement) {
       map.insertBefore(adElement, document.querySelector('.map__filters-container'));
