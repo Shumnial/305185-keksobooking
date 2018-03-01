@@ -10,8 +10,8 @@
       var img = button.querySelector('img');
       var fragment = document.createDocumentFragment();
       window.data.generatedAds.forEach(function (element, i) {
-        button.style.left = element.location.x - 25 + 'px';
-        button.style.top = element.location.y + 70 + 'px';
+        button.style.left = element.location.x + 'px';
+        button.style.top = element.location.y + 'px';
         img.setAttribute('src', element.author.avatar);
         var pinNode = button.cloneNode(true);
         pinNode.addEventListener('click', function () {

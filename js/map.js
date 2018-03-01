@@ -2,15 +2,17 @@
 // Данный модуль заключает в себе результат модулей card и pin, отрисовывая пины и карточку объявления
 (function () {
   var pinValues = {
-    MIN_Y: 150,
-    MAX_Y: 500,
-    MIN_X: 0,
-    MAX_X: 1200
+    MAIN_PIN_HEIGHT: 84,
+    MAIN_PIN_WIDTH: 65,
+    MIN_Y: 150 - 84,
+    MAX_Y: 500 - 84,
+    MIN_X: 0 + 65 / 2,
+    MAX_X: 1200 - 65 / 2,
   };
   var map = document.querySelector('.map');
   var mainPin = document.querySelector('.map__pin--main');
   var noticeForm = document.querySelector('.notice__form');
-  var formAddress = document.querySelector('#address');
+  var addressField = document.querySelector('#address');
   var onMainPinClick = function () {
     map.classList.remove('map--faded');
     noticeForm.classList.remove('notice__form--disabled');
@@ -24,7 +26,9 @@
   };
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    onMainPinClick();
+    if (map.classList.contains('map--faded')) {
+      onMainPinClick();
+    }
     var startCoords = {
       x: evt.clientX,
       y: evt.clientY
@@ -41,21 +45,25 @@
       };
       var offsetY = mainPin.offsetTop - shift.y;
       var offsetX = mainPin.offsetLeft - shift.x;
+      addressField.setAttribute('value', (mainPin.offsetLeft) + ' ' + (mainPin.offsetTop + pinValues.MAIN_PIN_HEIGHT));
       if (offsetY <= pinValues.MIN_Y) {
         mainPin.style.top = pinValues.MIN_Y + 'px';
+
       } else if (offsetY >= pinValues.MAX_Y) {
         mainPin.style.top = pinValues.MAX_Y + 'px';
+
       } else {
-        mainPin.style.top = mainPin.offsetTop - shift.y + 'px';
+        mainPin.style.top = offsetY + 'px';
       }
       if (offsetX <= pinValues.MIN_X) {
         mainPin.style.left = pinValues.MIN_X;
+
       } else if (offsetX >= pinValues.MAX_X) {
         mainPin.style.left = pinValues.MAX_X;
+
       } else {
-        mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+        mainPin.style.left = offsetX + 'px';
       }
-      formAddress.setAttribute('value', offsetX + ' ' + offsetY);
     };
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
