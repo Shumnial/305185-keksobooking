@@ -13,6 +13,8 @@
     MAX_X: 900,
     MIN_Y: 150,
     MAX_Y: 500,
+    PIN_WIDTH: 50,
+    PIN_HEIGHT: 70,
     TITLES: ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'],
     TYPES: ['flat', 'house', 'bungalo'],
     CLOCKS: ['12:00', '13:00', '14:00'],
@@ -58,7 +60,7 @@
         },
         'offer': {
           'title': getRandomElement(adConstants.TITLES),
-          'address': locationCoords[0] + ', ' + locationCoords[1],
+          'address': (locationCoords[0]) + ', ' + (locationCoords[1] + 70),
           'price': getRandomNumber(adConstants.MIN_PRICE, adConstants.MAX_PRICE),
           'type': getRandomElement(adConstants.TYPES),
           'rooms': getRandomNumber(adConstants.MIN_ROOMS, adConstants.MAX_ROOMS),
