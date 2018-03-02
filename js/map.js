@@ -3,7 +3,6 @@
 (function () {
   var pinValues = {
     MAIN_PIN_HEIGHT: 84,
-    MAIN_PIN_WIDTH: 65,
     MIN_Y: 150 - 84,
     MAX_Y: 500 - 84,
     MIN_X: 0 + 65 / 2,
@@ -13,16 +12,20 @@
   var mainPin = document.querySelector('.map__pin--main');
   var noticeForm = document.querySelector('.notice__form');
   var addressField = document.querySelector('#address');
-  var onMainPinClick = function () {
+  addressField.setAttribute('value', mainPin.offsetLeft + ' ' + (mainPin.offsetTop + pinValues.MAIN_PIN_HEIGHT));
+  var setActiveMode = function () {
     map.classList.remove('map--faded');
     noticeForm.classList.remove('notice__form--disabled');
     var fieldset = noticeForm.querySelectorAll('fieldset');
     for (var i = 0; i < fieldset.length; i++) {
       fieldset[i].removeAttribute('disabled');
     }
+  };
+  var onMainPinClick = function () {
     noticeForm.querySelector('.form__submit').removeAttribute('disabled');
     noticeForm.querySelector('.form__reset').removeAttribute('disabled');
     window.pin.fillPinsTemplate();
+    setActiveMode();
   };
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();

@@ -9,7 +9,7 @@
       var button = template.content.querySelector('.map__pin').cloneNode(true);
       var img = button.querySelector('img');
       var fragment = document.createDocumentFragment();
-      window.data.generatedAds.forEach(function (element, i) {
+      window.card.downloadedCards.forEach(function (element, i) {
         button.style.left = element.location.x + 'px';
         button.style.top = element.location.y + 'px';
         img.setAttribute('src', element.author.avatar);
