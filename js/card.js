@@ -29,6 +29,13 @@
   var onPopupEscPress = function (evt) {
     window.utils.isEscEvent(evt, closePopup);
   };
+  var downloadedCards = [];
+  var downloadCards = function (cards) {
+    for (var i = 0; i < cards.length; i++) {
+      downloadedCards[i] = cards[i];
+    }
+  };
+  window.backend.download(downloadCards);
   // Заполняет клонированную ноду шаблона с объявлением
   var fillAdsTemplate = function (arr) {
     title.textContent = arr.offer.title;
@@ -60,9 +67,10 @@
   popupClose.addEventListener('click', closePopup);
   window.card = {
     openPopup: function (i) {
-      fillAdsTemplate(window.data.generatedAds[i]);
+      fillAdsTemplate(window.card.downloadedCards[i]);
       mapCard.classList.remove('hidden');
       document.addEventListener('keydown', onPopupEscPress);
-    }
+    },
+    downloadedCards: downloadedCards
   };
 })();

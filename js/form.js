@@ -7,6 +7,7 @@
   var apartmentsPrice = document.querySelector('#price');
   var checkinTime = document.querySelector('#timein');
   var checkoutTime = document.querySelector('#timeout');
+  var noticeForm = document.querySelector('.notice__form');
 
   var roomsAndGuestsList = {
     '1': ['1'],
@@ -52,6 +53,11 @@
     checkoutTimeSync();
   };
   checkValidityOnStart();
+
+  var onInvalidValue = function (evt) {
+    evt.target.style.border = !evt.target.validity.valid ? '2px solid red' : 'none';
+  };
+  noticeForm.addEventListener('invalid', onInvalidValue, true);
   checkinTime.addEventListener('change', checkinTimeSync);
   checkoutTime.addEventListener('change', checkoutTimeSync);
   apartmentsType.addEventListener('change', onTypeChange);
