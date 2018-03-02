@@ -1,6 +1,7 @@
 'use strict';
 // Данный модуль предназначен для работы с формой
 (function () {
+  var map = document.querySelector('.map');
   var guestsCapacity = document.querySelector('#capacity');
   var roomNumber = document.querySelector('#room_number');
   var apartmentsType = document.querySelector('#type');
@@ -54,9 +55,27 @@
   };
   checkValidityOnStart();
 
+  var closeAndResetForm = function () {
+    noticeForm.reset();
+    map.classList.add('map--faded');
+    noticeForm.classList.add('notice__form--disabled');
+    var pins = document.querySelectorAll('.map__pin');
+    var fieldset = noticeForm.querySelectorAll('fieldset');
+    for (var i = 0; i < fieldset.length; i++) {
+      fieldset[i].setAttribute('disabled', 'disabled');
+    }
+    for (i = 1; i < pins.length; i++) {
+      pins[i].classList.add('hidden');
+    }
+  };
+
   var onInvalidValue = function (evt) {
     evt.target.style.border = !evt.target.validity.valid ? '2px solid red' : 'none';
   };
+  noticeForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.upload(new FormData(noticeForm), closeAndResetForm, window.error.show);
+  });
   noticeForm.addEventListener('invalid', onInvalidValue, true);
   checkinTime.addEventListener('change', checkinTimeSync);
   checkoutTime.addEventListener('change', checkoutTimeSync);

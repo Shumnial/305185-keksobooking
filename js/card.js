@@ -35,7 +35,7 @@
       downloadedCards[i] = cards[i];
     }
   };
-  window.backend.download(downloadCards);
+  window.backend.download(downloadCards, window.error.show);
   // Заполняет клонированную ноду шаблона с объявлением
   var fillAdsTemplate = function (arr) {
     title.textContent = arr.offer.title;
@@ -67,7 +67,7 @@
   popupClose.addEventListener('click', closePopup);
   window.card = {
     openPopup: function (i) {
-      fillAdsTemplate(window.card.downloadedCards[i]);
+      fillAdsTemplate(downloadedCards[i]);
       mapCard.classList.remove('hidden');
       document.addEventListener('keydown', onPopupEscPress);
     },
