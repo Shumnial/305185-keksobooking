@@ -31,7 +31,7 @@
   };
   var downloadedCards = [];
   var downloadCards = function (cards) {
-    for (var i = 0; i < cards.length; i++) {
+    for (var i = 0; i < 5; i++) {
       downloadedCards[i] = cards[i];
     }
   };
