@@ -41,3 +41,9 @@ var sortByFeatures = function (element) {
   });
   return featureIncluded;
 };
+
+sortByType();
+sortByGuests();
+sortByRooms();
+sortByFeatures();
+sortByPrice();
