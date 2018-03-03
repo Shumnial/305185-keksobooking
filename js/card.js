@@ -6,7 +6,8 @@
       'flat': 'Квартира',
       'house': 'Дом',
       'bungalo': 'Бунгало'
-    }
+    },
+    MAX_ADS: 5
   };
   var template = document.querySelector('#map-template');
   var mapCard = template.content.querySelector('.map__card').cloneNode(true);
@@ -29,13 +30,13 @@
   var onPopupEscPress = function (evt) {
     window.utils.isEscEvent(evt, closePopup);
   };
-  var downloadedCards = [];
-  var downloadCards = function (cards) {
-    for (var i = 0; i < 5; i++) {
-      downloadedCards[i] = cards[i];
+  var adCards = [];
+  var downloadedCards = function (cards) {
+    for (var i = 0; i < adConstants.MAX_ADS; i++) {
+      adCards[i] = cards[i];
     }
   };
-  window.backend.download(downloadCards, window.error.show);
+  window.backend.download(downloadedCards, window.error.show);
   // Заполняет клонированную ноду шаблона с объявлением
   var fillAdsTemplate = function (arr) {
     title.textContent = arr.offer.title;
@@ -67,10 +68,10 @@
   popupClose.addEventListener('click', closePopup);
   window.card = {
     openPopup: function (i) {
-      fillAdsTemplate(downloadedCards[i]);
+      fillAdsTemplate(adCards[i]);
       mapCard.classList.remove('hidden');
       document.addEventListener('keydown', onPopupEscPress);
     },
-    downloadedCards: downloadedCards
+    adCards: adCards
   };
 })();

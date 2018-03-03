@@ -5,11 +5,11 @@
   var mapPins = document.querySelector('.map__pins');
   var template = document.querySelector('#map-template');
   window.pin = {
-    fillPinsTemplate: function () {
+    fillPinsTemplate: function (arr) {
       var button = template.content.querySelector('.map__pin').cloneNode(true);
       var img = button.querySelector('img');
       var fragment = document.createDocumentFragment();
-      window.card.downloadedCards.forEach(function (element, i) {
+      arr.forEach(function (element, i) {
         button.style.left = element.location.x + 'px';
         button.style.top = element.location.y + 'px';
         img.setAttribute('src', element.author.avatar);

@@ -12,6 +12,7 @@
   var mainPin = document.querySelector('.map__pin--main');
   var noticeForm = document.querySelector('.notice__form');
   var addressField = document.querySelector('#address');
+  var mapFilters = document.querySelector('.map__filters');
   addressField.setAttribute('value', mainPin.offsetLeft + ' ' + (mainPin.offsetTop + pinValues.MAIN_PIN_HEIGHT));
   var setActiveMode = function () {
     map.classList.remove('map--faded');
@@ -24,9 +25,22 @@
   var onMainPinClick = function () {
     noticeForm.querySelector('.form__submit').removeAttribute('disabled');
     noticeForm.querySelector('.form__reset').removeAttribute('disabled');
-    window.pin.fillPinsTemplate();
+    window.pin.fillPinsTemplate(window.card.adCards);
     setActiveMode();
   };
+
+  var removePins = function () {
+    var pins = document.querySelectorAll('.map__pin');
+    for (var i = 1; i < pins.length; i++) {
+      pins[i].remove();
+    }
+  };
+  var onFilterChange = function () {
+    removePins();
+    var adCardsCopy = window.filter.filterAds(window.card.adCards);
+    window.pin.fillPinsTemplate(adCardsCopy);
+  };
+  mapFilters.addEventListener('change', onFilterChange);
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     if (map.classList.contains('map--faded')) {
